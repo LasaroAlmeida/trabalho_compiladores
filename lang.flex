@@ -33,10 +33,10 @@
 
 WHITE_SPACE_CHAR=[\ \n\r\t\b]
 MetaSimbolos = [(){}\[\];,:.]|[:][:]|[&][&]|[\"]|[\']
-DB = [\\][\\]
-BA = [\\][\']
+DB = ['][\\][\\][']
+BA = ['][\\][\'][']
 BOOL = true|false
-// CHAR = '\\(.{1})'
+CHAR = '(.{1})'
 ID = [a-z][a-zA-Z0-9_]*
 INT = 0|[1-9][0-9]*
 FLOAT = [1-9][0-9]*[.][0-9]*|[0][.][0-9]*|[.][0-9]*
@@ -65,8 +65,6 @@ COMMENT =  --[^\n|\r]*|\{\-[\s\S]*?\-\}
   "new"                  {System.out.println("NEW");               }
          
   {MetaSimbolos    }     {System.out.println(yytext());            }
-  {DB              }     {System.out.println("\\");                }
-  {BA              }     {System.out.println("'");                 }
   {COMMENT         }     {                                         }
   {WHITE_SPACE_CHAR}     {                                         }
 
@@ -76,10 +74,13 @@ COMMENT =  --[^\n|\r]*|\{\-[\s\S]*?\-\}
   {DIV             }     {System.out.println("DIV");               }
   {MOD             }     {System.out.println("MOD");               }
 
-  {CHAR            }     {System.out.println("CHAR:" + yytext());  }
+  
   {BOOL            }     {System.out.println("BOOL:" + yytext());  }
   {SYMB            }     {System.out.println(yytext());            }
   {ID              }     {System.out.println("ID:" + yytext());    }
+  {CHAR            }     {System.out.println("CHAR:" + yytext());  }
+  {DB              }     {System.out.println("CHAR:'\\'");                }
+  {BA              }     {System.out.println("CHAR:'\''");                 }
   {INT             }     {System.out.println("INT:" + yytext());   }
   {FLOAT           }     {System.out.println("FLOAT:" + yytext()); }
 
